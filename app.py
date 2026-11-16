@@ -235,15 +235,16 @@ with overview_tab:
         st.markdown('<div class="section-kicker">Project overview</div>', unsafe_allow_html=True)
         st.markdown(
             """
-            ### From raw observations to road states
-            This project turns hourly interstate volume records into an at-a-glance
-            traffic state. A **K-Means** model groups observations with similar
-            conditions; the resulting clusters are labeled from free flowing to
-            gridlock using their average speed.
+            ### Two complementary views of traffic
+            The project combines unsupervised traffic-state discovery with supervised
+            volume prediction. **K-Means** groups observations into four road states,
+            from free flowing to gridlock, ranked by their average speed.
 
-            The input variables are standardized before clustering so differences in
-            units do not dominate the model. The predictor uses the same four inputs
-            and preprocessing pipeline as training.
+            For forecasting, a **Random Forest regressor** estimates hourly traffic
+            volume from time and weather. Three classifiers—**Gaussian Naive Bayes**,
+            **Logistic Regression**, and a **Random Forest classifier**—also predict
+            four traffic-volume bands. Their results are compared on a chronological
+            holdout set.
             """
         )
         st.markdown(
@@ -261,13 +262,13 @@ with overview_tab:
         st.markdown(
             """
             <div class="info-card">
-              <h3>01 &nbsp; Prepare</h3><p>Extract hour and weekday from each timestamp.</p>
+              <h3>01 &nbsp; Prepare</h3><p>Derive hour and weekday; build time-and-weather features for forecasting.</p>
               <hr style="border-color:rgba(159,185,210,.13)">
-              <h3>02 &nbsp; Scale</h3><p>Standardize all four model inputs.</p>
+              <h3>02 &nbsp; Discover states</h3><p>Scale four inputs and group observations into four K-Means traffic states.</p>
               <hr style="border-color:rgba(159,185,210,.13)">
-              <h3>03 &nbsp; Cluster</h3><p>Group observations into four K-Means clusters.</p>
+              <h3>03 &nbsp; Forecast volume</h3><p>A Random Forest regressor estimates continuous hourly traffic volume.</p>
               <hr style="border-color:rgba(159,185,210,.13)">
-              <h3>04 &nbsp; Label</h3><p>Rank clusters by average speed and map them to traffic states.</p>
+              <h3>04 &nbsp; Compare bands</h3><p>Naive Bayes, Logistic Regression, and Random Forest classify four traffic-volume bands.</p>
             </div>
             """,
             unsafe_allow_html=True,
